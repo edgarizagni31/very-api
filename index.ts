@@ -17,6 +17,9 @@ app.set("subdomain offset", 1);
 app.set("port", process.env.PORT || "8080");
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("hello very-api");
+});
 app.get("/productos", searchStore, getProducts);
 app.get("/categorias", searchStore, getCategories);
 
