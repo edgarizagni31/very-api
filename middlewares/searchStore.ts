@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { db } from "../config/firebase";
 import { redisClient } from "../config/redis";
 import { Subdomain } from "@hicagni/very-types/types/subdomain";
-import { log } from "console";
 
 export const searchStore = async (
   req: Request,
