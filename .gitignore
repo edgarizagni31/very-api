@@ -1,3 +1,5 @@
 node_modules
 .env    
 rangers-37359-firebase-adminsdk-1wquw-ff7456093f.json
+dist/
+dump.rdb
