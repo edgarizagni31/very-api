@@ -1,8 +1,9 @@
-import { Subdomain } from "@hicagni/very-types/types/subdomain";
-import { redisClient } from "../config/redis";
-import { db } from "../config/firebase";
-import { Request, Response } from "express";
-import { Category } from "@hicagni/very-types/types/companies/category";
+import { Subdomain } from '@hicagni/very-types/types/subdomain';
+import { Request, Response } from 'express';
+import { Category } from '@hicagni/very-types/types/companies/category';
+
+import { redisClient } from '../../config/redis';
+import { db } from '../../config/firebase';
 
 interface ParseSubdomain extends Subdomain {
   pathRef: string;
@@ -24,7 +25,7 @@ export const getCategories = async (req: Request, res: Response) => {
       });
     }
 
-    const snap = await db.collection(subdomain.pathRef + "/categorias").get();
+    const snap = await db.collection(subdomain.pathRef + '/categorias').get();
     const data = snap.docs
       .map((doc) => doc.data() as Category)
       .filter((category) => category.status)
@@ -43,7 +44,7 @@ export const getCategories = async (req: Request, res: Response) => {
     console.log(err);
     return res.status(500).json({
       success: false,
-      message: "internal error",
+      message: 'internal error',
     });
   }
 };
