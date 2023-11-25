@@ -14,10 +14,10 @@ export const getProducts = async (req: Request, res: Response) => {
   try {
     const redis = await redisClient();
     const storageDomain = (await redis.get(
-      `domain-${req.subdomains[0]}`
+      `domain-${req.params.storeName}`
     )) as string;
     let subdomain: ParseSubdomain = JSON.parse(storageDomain);
-    const storageProducts = await redis.get(`products-${req.subdomains[0]}`);
+    const storageProducts = await redis.get(`products-${req.params.storeName}`);
 
     if (storageProducts) {
       return res.status(200).json({
@@ -38,7 +38,7 @@ export const getProducts = async (req: Request, res: Response) => {
     const resolveData = await Promise.all(data);
 
     await redis.set(
-      `products-${req.subdomains[0]}`,
+      `products-${req.params.storeName}`,
       JSON.stringify(resolveData)
     );
 
