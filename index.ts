@@ -4,6 +4,7 @@ import coors from 'cors';
 import * as dotenv from 'dotenv';
 
 import router from './routes';
+import { setCache } from './middlewares/setCache';
 
 const app = express();
 
@@ -11,6 +12,7 @@ dotenv.config();
 
 app.use(coors());
 app.use(morgan('dev'));
+app.use(setCache);
 app.set('subdomain offset', 1);
 app.set('port', process.env.PORT || '8080');
 app.use(express.json());
