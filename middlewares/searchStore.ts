@@ -10,7 +10,7 @@ export const searchStore = async (
 ) => {
   try {
     const redis = await redisClient();
-    const name = req.subdomains[0];
+    const name = req.params.storeName;
     const storageDomain = await redis.get(`domain-${name}`);
 
     if (storageDomain) return next();
