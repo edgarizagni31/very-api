@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { redisClient } from '../../config/redis';
 import { Subdomain } from '@hicagni/very-types/types/subdomain';
 import { db } from '../../config/firebase';
+import { firestore } from 'firebase-admin';
 
 interface ParseSubdomain extends Subdomain {
   pathRef: string;
@@ -17,7 +18,13 @@ export const saveOrder = async (req: Request, res: Response) => {
     let subdomain: ParseSubdomain = JSON.parse(storageDomain);
     const docRef = db.collection(subdomain.pathRef + `/very-menu`).doc();
 
-    await docRef.set({ id: docRef.id, ...data });
+    await docRef.set({
+      id: docRef.id,
+      ...data,
+      status: 'NUEVO',
+      created_at: firestore.FieldValue.serverTimestamp(),
+      ref: null
+    });
 
     return res.status(200).json({
       success: true,
@@ -25,7 +32,7 @@ export const saveOrder = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log(error);
-    
+
     return res.status(500).json({ data: error, success: false });
   }
 };
