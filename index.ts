@@ -12,7 +12,7 @@ dotenv.config();
 
 app.use(coors());
 app.use(morgan('dev'));
-app.use(setCache);
+//app.use(setCache);
 app.set('subdomain offset', 1);
 app.set('port', process.env.PORT || '8080');
 app.use(express.json());
