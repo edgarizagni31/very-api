@@ -9,10 +9,12 @@ import { saveOrder } from './controllers/order/saveOrder';
 import { updateStore } from './controllers/store/updateStore';
 import { updateProducts } from './controllers/product/updateProducts';
 import { updateCategories } from './controllers/category/updateCategories';
+import { updateStores } from './controllers/store/updateStores';
 
 const router = Router();
 
 router.get('/tiendas', getStores);
+router.put('/tiendas', updateStores);
 router.get('/tiendas/:storeName', searchStore, getStore);
 router.put('/tiendas/:storeName', searchStore, updateStore);
 router.get('/tiendas/:storeName/productos', searchStore, getProducts);
