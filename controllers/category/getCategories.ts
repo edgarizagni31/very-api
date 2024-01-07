@@ -12,10 +12,6 @@ interface ParseSubdomain extends Subdomain {
 export const getCategories = async (req: Request, res: Response) => {
   try {
     const redis = await redisClient();
-    const storageDomain = (await redis.get(
-      `domain-${req.params.storeName}`
-    )) as string;
-    let subdomain: ParseSubdomain = JSON.parse(storageDomain);
     const storageCategory = await redis.get(`categories-${req.params.storeName}`);
 
     if (storageCategory) {
@@ -25,6 +21,10 @@ export const getCategories = async (req: Request, res: Response) => {
       });
     }
 
+    const storageDomain = (await redis.get(
+      `domain-${req.params.storeName}`
+    )) as string;
+    let subdomain: ParseSubdomain = JSON.parse(storageDomain);
     const snap = await db.collection(subdomain.pathRef + '/categorias').get();
     const data = snap.docs
       .map((doc) => doc.data() as Category)
